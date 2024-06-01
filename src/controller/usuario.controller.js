@@ -4,15 +4,25 @@ export const UsuarioController = {
   async obtenerTodos (req, res) {
     try {
       const usuarios = await Usuario.obtenerTodos()
-
-      if (req.usuario && req.usuario.rol_id === 1) {
-        res.json(usuarios)
-      } else {
-        res.json({ id: req.usuario.usuario_id, nombre: req.usuario.nombre_usuario })
-      }
+      res.json(usuarios)
     } catch (error) {
       console.error(error)
       res.status(500).json({ mensaje: 'Error al obtener los usuarios' })
+    }
+  },
+
+  async obtenerPorId (req, res) {
+    const userId = req.params.id
+    try {
+      const usuario = await Usuario.obtenerPorId(userId)
+      if (usuario) {
+        res.json(usuario)
+      } else {
+        res.status(404).json({ mensaje: 'Usuario no encontrado' })
+      }
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ mensaje: 'Error al obtener el usuario' })
     }
   },
 

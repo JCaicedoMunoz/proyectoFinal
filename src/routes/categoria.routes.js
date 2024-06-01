@@ -1,5 +1,5 @@
 import express from 'express'
-import { verificarAutenticacion, verificarRolAdministrador } from '../middleware/autenticacion.middleware.js'
+import { verificarAutenticacion, verificarRolAdministrador } from '../middleware/autentication.middleware.js'
 import { CategoriaController } from '../controller/categoria.controller.js'
 
 const router = express.Router()

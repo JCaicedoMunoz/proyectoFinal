@@ -1,19 +1,24 @@
 export const verificarAutenticacion = (req, res, next) => {
-  const usuarioAutenticado = { usuario_id: 1, nombre_usuario: 'admin', rol_id: 1 }
-  req.usuario = usuarioAutenticado
+  const usuarioAutenticado = req.headers['usuario-autenticado']
+  if (!usuarioAutenticado) {
+    return res.status(401).json({ mensaje: 'No autenticado' })
+  }
+  res.status(403).json({ mensaje: 'Acceso denegado. Se requiere ser un usuario autenticado' })
   next()
 }
 
 export const verificarRolAdministrador = (req, res, next) => {
-  if (req.usuario && req.usuario.rol_id === 1) {
+  const usuario = req.headers['usuario-autenticado']
+  if (usuario && usuario.rol === 'administrador') {
     next()
   } else {
-    res.status(403).json({ mensaje: 'Acceso denegado. Se requiere rol de administrador' })
+    next()
   }
 }
 
 export const verificarRolUsuario = (req, res, next) => {
-  if (req.usuario && (req.usuario.rol_id === 1 || req.usuario.rol_id === 2)) {
+  const usuario = req.headers['usuario-autenticado']
+  if (usuario) {
     next()
   } else {
     res.status(403).json({ mensaje: 'Acceso denegado. Se requiere ser un usuario autenticado' })

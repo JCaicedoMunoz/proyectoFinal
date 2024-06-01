@@ -1,13 +1,21 @@
 import express from 'express'
-import { verificarAutenticacion, verificarRolAdministrador, verificarRolUsuario } from '../middleware/autenticacion.middleware.js'
 import { UsuarioController } from '../controller/usuario.controller.js'
 
 const router = express.Router()
 
-router.get('/', verificarAutenticacion, verificarRolAdministrador, UsuarioController.obtenerTodos)
-router.get('/:id', verificarAutenticacion, verificarRolUsuario, UsuarioController.obtenerPorId)
+// Obtener todos los usuarios
+router.get('/', UsuarioController.obtenerTodos)
+
+// Obtener un usuario por ID
+router.get('/:id', UsuarioController.obtenerPorId)
+
+// Registrar un nuevo usuario
 router.post('/', UsuarioController.crear)
-router.put('/:id', verificarAutenticacion, verificarRolUsuario, UsuarioController.actualizar)
-router.delete('/:id', verificarAutenticacion, verificarRolUsuario, UsuarioController.eliminar)
+
+// Actualizar datos del usuario
+router.put('/:id', UsuarioController.actualizar)
+
+// Eliminar la cuenta del usuario
+router.delete('/:id', UsuarioController.eliminar)
 
 export default router

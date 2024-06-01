@@ -1,5 +1,5 @@
 import express from 'express'
-import { AutenticacionController } from '../controller/autenticacion.controller.js'
+import { AutenticacionController } from '../controller/autentication.controller'
 
 const router = express.Router()
 
